@@ -1,1 +1,0 @@
-// định nghĩa các models ở đây tạo thư mục cùng cha rồi làm

@@ -1,1 +1,0 @@
-// kết nối database ở đây
