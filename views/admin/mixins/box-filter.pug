@@ -1,0 +1,6 @@
+mixin box-filter(options, attribute)
+  select(class = "form-control" ${attribute} id="exampleFormControlSelect1" name="categoryId")
+    each item in options
+      option(value = item.categoryId selected=(categoryId == item.categoryId ? true : null)) 
+        div #{item.name} - (#{item.totleRecruitId})
+
