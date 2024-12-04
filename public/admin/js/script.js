@@ -4,6 +4,10 @@ if (formSelect){
     event.preventDefault();
     const categoryId = formSelect.querySelector('select[name="categoryId"]').value;
     const path = formSelect.getAttribute("data-path")
-    window.location.href = `${path}/${categoryId}`
+    console.log(path)
+    if (categoryId == "all"){
+      window.location.href = `${path}`
+    }
+    else window.location.href = `${path}/${categoryId}`
   })
 }

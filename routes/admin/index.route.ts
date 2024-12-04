@@ -11,5 +11,10 @@ export const adminRoutes = (app: Express) => {
   app.use(`${prefixAdmin}/category`, categoryRouter)
   app.use(`${prefixAdmin}/recruitment`, recruitmentRouter)
   app.use(`${prefixAdmin}/employer`, employerRouter)
+  app.get("*", (req, res) => {
+    res.render("admin/pages/error/404", {
+      pageTitle: "404 Not Found",
+    });
+  });
 }
 

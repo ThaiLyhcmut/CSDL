@@ -1,0 +1,96 @@
+extends ../../layouts/default.pug
+include ../../mixins/box-filter.pug
+include ../../mixins/box-head.pug
+block main 
+  .row
+      .col-12
+        +box-head(pageTitle)
+  form(
+    action=`${prefixAdmin}/products/edit/?_method=PATCH`
+    method="POST"
+    enctype="multipart/form-data"
+  )
+    div(class="form-group")
+      label(for="title") Tiêu đề
+      input(
+        type="text"
+        class="form-control"
+        id="title"
+        name="title"
+        value
+        required
+      )
+    div(class="form-group")
+      label(for="parent_id") Danh mục cha
+      select(
+        class="form-control"
+        id="category_id"
+        name="category_id"
+      )
+        option(value="") -- Chọn danh mục --
+        //- each item in listCategory
+        //-   option(value=item.id) #{item.title}
+    div(class="form-group")
+      label(for="position") Vị trí công việc
+      input(
+        type="text"
+        class="form-control"
+        id="position"
+        name="position"
+      )
+    div(class="form-group")
+      label(for="location") Địa điểm công việc
+      input(
+        type="text"
+        class="form-control"
+        id="location"
+        name="location"
+      )
+    div(class="form-group")
+      label(for="description") Mô tả
+      textarea(
+        class="form-control"
+        id="description"
+        name="description"
+        rows="5"
+        textarea-mce
+      ) 
+    div(class="form-group")
+      label(for="experience") Kinh nghiệm
+      input(
+        type="text"
+        class="form-control"
+        id="experience"
+        name="experience"     
+      )
+    div(class="form-group")
+      label(for="salary") Lương
+      input(
+        type="number"
+        class="form-control"
+        id="salary"
+        name="salary"
+        min="0"
+      )
+    div(class="form-group")
+      label(for="numbers") Số lượng
+      input(
+        type="number"
+        class="form-control"
+        id="numbers"
+        name="numbers"
+        min="0"
+      )
+    div(class="form-group")
+      label(for="deadline") Hết hạn
+      input(
+        type="date"
+        class="form-control"
+        id="deadline"
+        name="deadline"
+      )
+    div(class="form-group")
+      button(
+        type="submit"
+        class="btn btn-primary"
+      ) Cap nhat
