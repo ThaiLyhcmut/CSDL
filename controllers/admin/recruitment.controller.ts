@@ -71,6 +71,7 @@ export const getRecruitmentIdDetail = async (req: Request, res: Response) => {
     res.render("admin/pages/recruitment/edit", {
       pageTitle: `Trang chi tiet bai dang cua ${result.fullName}`,
       recruitment: recruitment,
+      recruitmentId: recruitmentId,
       careers: careers,
       categoryId: recruitment['Categories.categoryId']
     })
@@ -99,6 +100,52 @@ export const deleteRecruitmentId = async (req: Request, res: Response) => {
       "msg": "Xoa khong thanh cong"
     })
   }catch (err) {
+    res.redirect(`/error/${err}`)
+  }
+}
+
+export const getRecruitmentCreate = async(req: Request, res: Response) => {
+  try {
+    const careers = await sequelize.query(`CALL GetCareerRecruitmentCounts()`, {
+      type: QueryTypes.RAW,
+    })
+    res.render("admin/pages/recruitment/create", {
+      careers: careers
+    })
+  }catch (err){
+    res.redirect(`/error/${err}`)
+  }
+}
+
+export const postRecruitmentCreate = async (req: Request, res: Response) => {
+  try{
+    res.send("OK")
+  }catch (err){
+    res.redirect(`/error/${err}`)
+  }
+}
+
+export const patchRecruitmentId = async (req: Request, res: Response) => {
+  try{
+    console.log(req.body)
+    const recruitmentId = req.params.id
+    const data = {
+      recruitmentId_param: parseInt(recruitmentId),
+      title_param: req.body.title,
+      workPosition_param: req.body.position,
+      location_param: req.body.location,
+      description_param: req.body.description,
+      experience_param: req.body.experience,
+      salary_param: parseFloat(req.body.salary),
+      theNumberOfOpenings_param: parseInt(req.body.numbers),
+      deadline_param: req.body.deadline
+    }
+    const record = await sequelize.query('CALL UpdateRecruitment(:recruitmentId_param, :title_param, :workPosition_param, :location_param, :description_param, :experience_param, :salary_param, :theNumberOfOpenings_param, :deadline_param)', {
+      replacements: data,
+      raw: true
+    })
+    res.redirect("/admin/recruitment")
+  }catch (err){
     res.redirect(`/error/${err}`)
   }
 }

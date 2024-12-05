@@ -19,3 +19,41 @@ export const index = async (req: Request, res: Response) => {
     res.redirect(`/error/${err}`)
   }
 }
+
+export const getCategory = async (req: Request, res: Response) => {
+  res.render("admin/pages/category/create", {
+    pageTitle: "Trang them moi danh muc"
+  })
+}
+
+export const postCategory = async (req: Request, res: Response) => {
+  try{
+    const name_param = req.body.name
+    const record = await sequelize.query('CALL InsertCareer(:name_param)', {
+      replacements: { name_param },
+      raw: true
+    })
+    res.redirect("/admin/category")
+  }catch (err){
+    res.redirect(`/error/${err}`)
+  }
+}
+
+export const deleteCategory = async (req: Request, res: Response) => {
+  try{
+    const carrerId_param = req.params.id
+    const record = await sequelize.query('CALL DeleteCareerById(:carrerId_param)', {
+      replacements: {carrerId_param},
+      raw: true
+    })
+    res.status(200).json({
+      "code": "success",
+      "msg": "Xóa bản ghi thành công"
+    })
+  }catch (err){
+    res.status(400).json({
+      "code": "error",
+      "msg": "Bị gàn buộc bỡi bài đăng"
+    })
+  }
+}

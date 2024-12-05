@@ -7,7 +7,7 @@ block main
       .col-12
         +box-head(pageTitle)
       .col-4.text-right 
-        a(href=`${prefixAdmin}/products-category/create`
+        a(href=`${prefixAdmin}/category/create`
               class="btn btn-outline-success"
             ) + Them moi
     .row
@@ -37,7 +37,7 @@ block main
                 ) Sửa
                 button(
                   class="btn btn-danger btn-sm ml-1"
-                  item-id=item.id
+                  item-id=item.categoryId
                   button-delete
                   data-path=`${prefixAdmin}/category/delete`
                 ) Xóa

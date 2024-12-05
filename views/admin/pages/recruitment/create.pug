@@ -6,7 +6,7 @@ block main
       .col-12
         +box-head(pageTitle)
   form(
-    action=`${prefixAdmin}/recruitment/edit/${recruitmentId}?_method=PATCH`
+    action=`${prefixAdmin}/recruitment/create`
     method="POST"
   )
     div(class="form-group")
@@ -16,7 +16,6 @@ block main
         class="form-control"
         id="title"
         name="title"
-        value=recruitment.title
         required
       )
     div(class="form-group")
@@ -26,9 +25,8 @@ block main
         id="category_id"
         name="category_id"
       )
-        option(value="") -- Chọn danh mục --
         each item in careers
-          option(value=item.categoryId selected=(categoryId == item.categoryId ? true : null)) #{item.name}
+          option(value=item.categoryId) #{item.name}
     div(class="form-group")
       label(for="position") Vị trí công việc
       input(
@@ -36,7 +34,6 @@ block main
         class="form-control"
         id="position"
         name="position"
-        value=recruitment.workPosition
       )
     div(class="form-group")
       label(for="location") Địa điểm công việc
@@ -45,7 +42,6 @@ block main
         class="form-control"
         id="location"
         name="location"
-        value=recruitment.location
       )
     div(class="form-group")
       label(for="description") Mô tả
@@ -55,15 +51,14 @@ block main
         name="description"
         rows="5"
         textarea-mce
-      ) #{recruitment.description}
+      )
     div(class="form-group")
       label(for="experience") Kinh nghiệm
       input(
         type="text"
         class="form-control"
         id="experience"
-        name="experience" 
-        value=recruitment.experience    
+        name="experience"   
       )
     div(class="form-group")
       label(for="salary") Lương
@@ -73,7 +68,6 @@ block main
         id="salary"
         name="salary"
         min="0"
-        value=recruitment.salary
       )
     div(class="form-group")
       label(for="numbers") Số lượng
@@ -83,7 +77,6 @@ block main
         id="numbers"
         name="numbers"
         min="0"
-        value=recruitment.theNumberOfOpenings
       )
     div(class="form-group")
       label(for="deadline") Hết hạn
@@ -92,7 +85,6 @@ block main
         class="form-control"
         id="deadline"
         name="deadline"
-        value=recruitment.deadline
       )
     div(class="form-group")
       button(
