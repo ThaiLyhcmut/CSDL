@@ -6,7 +6,7 @@ import sequelize from "../configs/database";
 export const User = sequelize.define(
   "User",
   {
-    UserID: {
+    UserId: {
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true,

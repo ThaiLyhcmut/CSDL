@@ -1,5 +1,6 @@
 import { DataTypes } from "sequelize";
 import sequelize from "../configs/database";
+import { Category } from "./category.model";
 
 
 export const Recruitment = sequelize.define(
@@ -47,3 +48,7 @@ export const Recruitment = sequelize.define(
     timestamps: false
   }
 )
+
+
+Category.belongsTo(Recruitment, { foreignKey: 'recruitmentId' });
+Recruitment.hasMany(Category, { foreignKey: 'recruitmentId' });

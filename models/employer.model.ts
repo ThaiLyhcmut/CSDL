@@ -10,7 +10,7 @@ export const Employer = sequelize.define(
       allowNull: false,
       primaryKey: true,
     },
-    comanyId : {
+    companyId : {
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true

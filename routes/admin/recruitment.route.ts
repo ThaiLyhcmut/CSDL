@@ -6,6 +6,8 @@ import * as controller from "../../controllers/admin/recruitment.controller"
 router.get("/", controller.getRecruitmentId)
 
 router.get("/edit/:id", controller.getRecruitmentIdDetail)
+router.delete("/delete/:id", controller.deleteRecruitmentId)
+
 router.get("/:id", controller.getRecruitmentId)
 
 

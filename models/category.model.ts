@@ -1,5 +1,6 @@
 import { DataTypes } from "sequelize";
 import sequelize from "../configs/database";
+import { Recruitment } from "./recruitment.model";
 
 
 
@@ -21,3 +22,4 @@ export const Category = sequelize.define(
     timestamps: false
   }
 )
+
