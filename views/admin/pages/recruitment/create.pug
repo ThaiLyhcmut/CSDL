@@ -19,7 +19,7 @@ block main
         required
       )
     div(class="form-group")
-      label(for="parent_id") Danh mục cha
+      label(for="category_id") Danh mục cha
       select(
         class="form-control"
         id="category_id"
@@ -27,6 +27,15 @@ block main
       )
         each item in careers
           option(value=item.categoryId) #{item.name}
+    div(class="form-group")
+      label(for="employer_id") Nhà tuyển dụng
+      select(
+        class="form-control"
+        id="employer_id"
+        name="employer_id"
+      )
+        each item in employers
+          option(value=item.employerId) #{item.fullName}
     div(class="form-group")
       label(for="position") Vị trí công việc
       input(

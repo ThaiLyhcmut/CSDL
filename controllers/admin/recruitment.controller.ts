@@ -73,7 +73,8 @@ export const getRecruitmentIdDetail = async (req: Request, res: Response) => {
       recruitment: recruitment,
       recruitmentId: recruitmentId,
       careers: careers,
-      categoryId: recruitment['Categories.categoryId']
+      categoryId: recruitment['Categories.categoryId'],
+      // employers: employers
     })
   }catch (err) {
     res.redirect(`/error/${err}`)
@@ -106,11 +107,16 @@ export const deleteRecruitmentId = async (req: Request, res: Response) => {
 
 export const getRecruitmentCreate = async(req: Request, res: Response) => {
   try {
+    const employers = await sequelize.query('CALL process_employers()', {
+      type: QueryTypes.RAW,
+    })
+    console.log(employers)
     const careers = await sequelize.query(`CALL GetCareerRecruitmentCounts()`, {
       type: QueryTypes.RAW,
     })
     res.render("admin/pages/recruitment/create", {
-      careers: careers
+      careers: careers,
+      employers: employers
     })
   }catch (err){
     res.redirect(`/error/${err}`)
@@ -119,7 +125,24 @@ export const getRecruitmentCreate = async(req: Request, res: Response) => {
 
 export const postRecruitmentCreate = async (req: Request, res: Response) => {
   try{
-    res.send("OK")
+    console.log(req.body)
+    const data = {
+      employerId_param: parseInt(req.body.employer_id),
+      title_param: req.body.title,
+      workPosition_param: req.body.position,
+      location_param: req.body.location,
+      description_param: req.body.description,
+      experience_param: req.body.experience,
+      salary_param: parseFloat(req.body.salary),
+      openings_param: parseInt(req.body.numbers),
+      deadline_param: req.body.deadline,
+      categoryId_param: req.body.category_id
+    }
+    const record = sequelize.query('CALL InsertRecruitment(:employerId_param, :title_param, :workPosition_param, :location_param, :description_param, :experience_param, :salary_param, :openings_param, :deadline_param, :categoryId_param)', {
+      replacements: data,
+      raw: true
+    })
+    res.redirect("/admin/recruitment")
   }catch (err){
     res.redirect(`/error/${err}`)
   }
@@ -127,8 +150,9 @@ export const postRecruitmentCreate = async (req: Request, res: Response) => {
 
 export const patchRecruitmentId = async (req: Request, res: Response) => {
   try{
-    console.log(req.body)
+    console.log(req.body.category_id)
     const recruitmentId = req.params.id
+    console.log(recruitmentId)
     const data = {
       recruitmentId_param: parseInt(recruitmentId),
       title_param: req.body.title,
@@ -138,9 +162,10 @@ export const patchRecruitmentId = async (req: Request, res: Response) => {
       experience_param: req.body.experience,
       salary_param: parseFloat(req.body.salary),
       theNumberOfOpenings_param: parseInt(req.body.numbers),
-      deadline_param: req.body.deadline
+      deadline_param: req.body.deadline,
+      categoryId: req.body.category_id
     }
-    const record = await sequelize.query('CALL UpdateRecruitment(:recruitmentId_param, :title_param, :workPosition_param, :location_param, :description_param, :experience_param, :salary_param, :theNumberOfOpenings_param, :deadline_param)', {
+    const record = await sequelize.query('CALL UpdateRecruitment(:recruitmentId_param, :title_param, :workPosition_param, :location_param, :description_param, :experience_param, :salary_param, :theNumberOfOpenings_param, :deadline_param, :categoryId)', {
       replacements: data,
       raw: true
     })
