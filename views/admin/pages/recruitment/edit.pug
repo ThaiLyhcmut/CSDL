@@ -26,7 +26,6 @@ block main
         id="category_id"
         name="category_id"
       )
-        option(value="") -- Chọn danh mục --
         each item in careers
           option(value=item.categoryId selected=(categoryId == item.categoryId ? true : null)) #{item.name}
     div(class="form-group")

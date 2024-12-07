@@ -61,7 +61,11 @@ export const getRecruitmentId = async (req: Request, res: Response) => {
       currentPage: page
     })
   }catch (err) {
-    res.redirect(`/error/${err}`)
+    res.render("admin/pages/error/404", {
+      code: 400,
+      code_param: 0,
+      msg: err
+    });
   }
 }
 
@@ -97,7 +101,11 @@ export const getRecruitmentIdDetail = async (req: Request, res: Response) => {
       // employers: employers
     })
   }catch (err) {
-    res.redirect(`/error/${err}`)
+    res.render("admin/pages/error/404", {
+      code: 400,
+      code_param: 0,
+      msg: err
+    });
   }
 }
 
@@ -121,7 +129,11 @@ export const deleteRecruitmentId = async (req: Request, res: Response) => {
       "msg": "Xoa khong thanh cong"
     })
   }catch (err) {
-    res.redirect(`/error/${err}`)
+    res.render("admin/pages/error/404", {
+      code: 400,
+      code_param: 0,
+      msg: err
+    });
   }
 }
 
@@ -140,7 +152,11 @@ export const getRecruitmentCreate = async(req: Request, res: Response) => {
       employers: employers
     })
   }catch (err){
-    res.redirect(`/error/${err}`)
+    res.render("admin/pages/error/404", {
+      code: 400,
+      code_param: 0,
+      msg: err
+    });
   }
 }
 
@@ -165,7 +181,11 @@ export const postRecruitmentCreate = async (req: Request, res: Response) => {
     })
     res.redirect("/admin/recruitment")
   }catch (err){
-    res.redirect(`/error/${err}`)
+    res.render("admin/pages/error/404", {
+      code: 400,
+      code_param: 0,
+      msg: err
+    });
   }
 }
 
@@ -192,6 +212,10 @@ export const patchRecruitmentId = async (req: Request, res: Response) => {
     })
     res.redirect("/admin/recruitment")
   }catch (err){
-    res.redirect(`/error/${err}`)
+    res.render("admin/pages/error/404", {
+      code: 400,
+      code_param: 0,
+      msg: err
+    });
   }
 }

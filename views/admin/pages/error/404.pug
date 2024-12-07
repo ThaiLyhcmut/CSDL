@@ -3,16 +3,16 @@ html
   head
     link(rel="stylesheet", href="/admin/css/404.css")
   body
-    h1 404 Not Found!
+    h1 #{code}
     p.zoom-area
       b CSS
-      | animations to make a cool 404 page.
+      | animations to make a cool #{code} page.
     section.error-container
       span.four
         span.screen-reader-text 4
       span.zero
         span.screen-reader-text 0
       span.four
-        span.screen-reader-text 4
-    div.link-container
-      a(href="/").more-link Go to Home page
+        span.screen-reader-text #{code_param}
+    div.link-container.mb-10
+      a(href="/admin/dashboarh").more-link #{msg}

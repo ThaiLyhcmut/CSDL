@@ -16,7 +16,11 @@ export const index = async (req: Request, res: Response) => {
       careers: careers
     })
   }catch (err) {
-    res.redirect(`/error/${err}`)
+    res.render("admin/pages/error/404", {
+      code: 400,
+      code_param: 0,
+      msg: err
+    });
   }
 }
 
@@ -35,7 +39,11 @@ export const postCategory = async (req: Request, res: Response) => {
     })
     res.redirect("/admin/category")
   }catch (err){
-    res.redirect(`/error/${err}`)
+    res.render("admin/pages/error/404", {
+      code: 400,
+      code_param: 0,
+      msg: err
+    });
   }
 }
 

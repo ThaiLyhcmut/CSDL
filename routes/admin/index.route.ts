@@ -13,7 +13,9 @@ export const adminRoutes = (app: Express) => {
   app.use(`${prefixAdmin}/employer`, employerRouter)
   app.get("*", (req, res) => {
     res.render("admin/pages/error/404", {
-      pageTitle: "404 Not Found",
+      code: 404,
+      code_param: 4,
+      msg: "Không tìm thấy đường dẫn"
     });
   });
 }
