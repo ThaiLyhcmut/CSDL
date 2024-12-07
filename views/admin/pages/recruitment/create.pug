@@ -17,9 +17,10 @@ block main
         id="title"
         name="title"
         required
+        placeholder="Nhập tiêu đề"
       )
     div(class="form-group")
-      label(for="category_id") Danh mục cha
+      label(for="category_id") Lĩnh vực
       select(
         class="form-control"
         id="category_id"
@@ -29,13 +30,19 @@ block main
           option(value=item.categoryId) #{item.name}
     div(class="form-group")
       label(for="employer_id") Nhà tuyển dụng
-      select(
-        class="form-control"
+      input(
+        list="browsers"
+        name="employer_id"
         id="employer_id"
+        class="w-100"
+      )
+      dataList(
+        id="browsers"
         name="employer_id"
       )
         each item in employers
-          option(value=item.employerId) #{item.fullName}
+          option(value=item.employerId) #{item.companyName} 
+            b (được tạo bởi #{item.fullName})
     div(class="form-group")
       label(for="position") Vị trí công việc
       input(
@@ -43,6 +50,7 @@ block main
         class="form-control"
         id="position"
         name="position"
+        placeholder="Nhập vị trí công việc"
       )
     div(class="form-group")
       label(for="location") Địa điểm công việc
@@ -51,6 +59,7 @@ block main
         class="form-control"
         id="location"
         name="location"
+        placeholder="Nhập địa điểm công việc"
       )
     div(class="form-group")
       label(for="description") Mô tả
@@ -59,24 +68,27 @@ block main
         id="description"
         name="description"
         rows="5"
+        placeholder="Nhập mô tả"
         textarea-mce
       )
     div(class="form-group")
-      label(for="experience") Kinh nghiệm
+      label(for="experience") Kinh nghiệm (năm)
       input(
         type="text"
         class="form-control"
         id="experience"
-        name="experience"   
+        name="experience"  
+        placeholder="Nhập yêu cầu kinh nghiệm" 
       )
     div(class="form-group")
-      label(for="salary") Lương
+      label(for="salary") Lương ($)
       input(
         type="number"
         class="form-control"
         id="salary"
         name="salary"
         min="0"
+        placeholder="Nhập mức lương ($)"
       )
     div(class="form-group")
       label(for="numbers") Số lượng
@@ -86,6 +98,7 @@ block main
         id="numbers"
         name="numbers"
         min="0"
+        placeholder="Nhập số lượng cần tuyển"
       )
     div(class="form-group")
       label(for="deadline") Hết hạn

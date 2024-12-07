@@ -20,7 +20,7 @@ block main
         required
       )
     div(class="form-group")
-      label(for="parent_id") Danh mục cha
+      label(for="parent_id") Lĩnh vực
       select(
         class="form-control"
         id="category_id"
@@ -37,6 +37,7 @@ block main
         id="position"
         name="position"
         value=recruitment.workPosition
+        placeholder="Nhập vị trí công việc"
       )
     div(class="form-group")
       label(for="location") Địa điểm công việc
@@ -63,10 +64,11 @@ block main
         class="form-control"
         id="experience"
         name="experience" 
-        value=recruitment.experience    
+        value=recruitment.experience  
+        placeholder="Nhập số năm kinh nghiệm cần"
       )
     div(class="form-group")
-      label(for="salary") Lương
+      label(for="salary") Lương ($)
       input(
         type="number"
         class="form-control"

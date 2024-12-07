@@ -34,3 +34,19 @@ if (buttonDelete){
     })
   })
 }
+
+const listButtonPagination = document.querySelectorAll("[button-pagination]")
+if(listButtonPagination.length > 0){
+  let url = new URL(location.href);
+  listButtonPagination.forEach((button) => {
+    button.addEventListener("click", (event) => {
+      const page = button.getAttribute("button-pagination")
+      if(page){
+        url.searchParams.set("page", page)
+      }else{
+        url.searchParams.delete("page")
+      }
+      location.href = url.href
+    })
+  })
+}
