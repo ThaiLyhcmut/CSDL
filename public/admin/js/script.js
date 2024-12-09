@@ -28,6 +28,23 @@ if (buttonDelete){
         }).then(res => res.json()).then(data => {
           if(data.code == "success"){
             location.reload()
+          }else{
+            document.querySelector("body").insertAdjacentHTML(
+              "afterbegin",
+              `
+                <div class="alert alert-danger" role="alert">
+                  ${data.msg}
+                </div>
+              `
+            );
+            const alertEror = document.querySelector(".alert.alert-danger");
+            if (alertEror) {
+              setTimeout(() => {
+                if (document.body.contains(alertEror)) {
+                  document.body.removeChild(alertEror);
+                }
+              }, 5000);
+            }
           }
         })
       }
@@ -50,3 +67,6 @@ if(listButtonPagination.length > 0){
     })
   })
 }
+
+
+// Thiết lập giá trị mặc định cho input

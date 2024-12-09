@@ -93,7 +93,7 @@ export const getRecruitmentIdDetail = async (req: Request, res: Response) => {
     })
     console.log(careers)
     res.render("admin/pages/recruitment/edit", {
-      pageTitle: `Trang chi tiet bai dang cua ${result.fullName}`,
+      pageTitle: `Trang chi tiet bai dang của Công Ty ${result.fullName}`,
       recruitment: recruitment,
       recruitmentId: recruitmentId,
       careers: careers,
@@ -162,7 +162,9 @@ export const getRecruitmentCreate = async(req: Request, res: Response) => {
 
 export const postRecruitmentCreate = async (req: Request, res: Response) => {
   try{
-    console.log(req.body)
+    if(!req.body.employer_id){
+      res.redirect("back")
+    }
     const data = {
       employerId_param: parseInt(req.body.employer_id),
       title_param: req.body.title,
@@ -170,30 +172,24 @@ export const postRecruitmentCreate = async (req: Request, res: Response) => {
       location_param: req.body.location,
       description_param: req.body.description,
       experience_param: req.body.experience,
-      salary_param: parseFloat(req.body.salary),
-      openings_param: parseInt(req.body.numbers),
-      deadline_param: req.body.deadline,
+      salary_param: parseFloat(req.body.salary) || 0,
+      openings_param: parseInt(req.body.numbers) || 1,
+      deadline_param: req.body.deadline || Date,
       categoryId_param: req.body.category_id
-    }
-    const record = sequelize.query('CALL InsertRecruitment(:employerId_param, :title_param, :workPosition_param, :location_param, :description_param, :experience_param, :salary_param, :openings_param, :deadline_param, :categoryId_param)', {
+    } 
+    const record = await sequelize.query('CALL InsertRecruitment(:employerId_param, :title_param, :workPosition_param, :location_param, :description_param, :experience_param, :salary_param, :openings_param, :deadline_param, :categoryId_param)', {
       replacements: data,
       raw: true
     })
     res.redirect("/admin/recruitment")
   }catch (err){
-    res.render("admin/pages/error/404", {
-      code: 400,
-      code_param: 0,
-      msg: err
-    });
+    res.redirect("back")
   }
 }
 
 export const patchRecruitmentId = async (req: Request, res: Response) => {
   try{
-    console.log(req.body.category_id)
     const recruitmentId = req.params.id
-    console.log(recruitmentId)
     const data = {
       recruitmentId_param: parseInt(recruitmentId),
       title_param: req.body.title,

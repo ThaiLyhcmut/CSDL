@@ -43,3 +43,15 @@
   border-bottom: 1px solid #515151;
 }
 /* End Sider */
+
+.alert {
+  position: fixed; /* Đặt vị trí cố định trên trang */
+  top: 20px; /* Cách phía trên một khoảng nhỏ */
+  left: 50%; /* Căn giữa theo chiều ngang */
+  transform: translateX(-50%); /* Dịch chuyển lại để thực sự căn giữa */
+  z-index: 9999; /* Đảm bảo alert xuất hiện trên các phần tử khác */
+  width: 80%; /* Bạn có thể điều chỉnh chiều rộng của alert nếu cần */
+  max-width: 600px; /* Đặt chiều rộng tối đa của alert */
+  margin: 0 auto; /* Căn giữa alert trong container */
+  padding: 10px 20px; /* Thêm padding để alert dễ nhìn hơn */
+}

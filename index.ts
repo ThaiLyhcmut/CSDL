@@ -12,6 +12,11 @@ sequelize
 
 const app: Express = express();
 const port: number = 3000;
+// Middleware bắt lỗi toàn cục
+app.use((err, req, res, next) => {
+  console.error('Error:', err.message);
+  res.status(500).json({ message: 'Something went wrong!' });
+});
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(methodOverride("_method"));
