@@ -1,0 +1,88 @@
+extends ../../layouts/default.pug
+include ../../mixins/box-head.pug
+include ../../mixins/box-filter.pug
+
+block main
+  .row
+    .col-12
+      +box-head(pageTitle)
+  .container.my-3
+    
+    .card
+      .card-header Chọn lĩnh vực
+      .card-body
+        .row.mb-3 
+          .col-6
+            form(form-link data-path=`${prefixAdmin}/recruitment`).d-flex
+              +box-filter(careers, "")
+              .input-group-append
+                button(
+                  class = "btn btn-success"
+                  type = "submit"
+                ) Tim
+          .col-6.text-right
+            a(href="/admin/recruitment/create"
+            class = "btn btn-outline-success"
+            ) + add product
+    .card
+      .card-header Nhập tìm kiếm 
+      .card-body
+        .row 
+          .col-12
+            include ../../partials/form-search.pug
+    .row
+      table(
+        class="table table-hover table-sm"
+      )
+        thead.button-sort-value
+          tr
+            th STT
+            th title 
+            th position
+            th location
+            th description
+            th experience
+            th salary
+            th numbers
+            th deadline
+            th createAt
+            th active
+        tbody
+          each item, index in recruitments
+            tr
+              td #{index + 1}
+              td #{item.title}
+              td #{item.workPosition}
+              td #{item.location}
+              td #{item.description}
+              td #{item.experience}
+              td #{item.salary}
+              td #{item.theNumberOfOpenings}
+              td #{item.deadline}
+              td #{item.createAt}
+              td
+                a(
+                  class="btn btn-warning btn-sm ml-1 mb-1"
+                  href=`${prefixAdmin}/recruitment/edit/${item.recruitmentId}`
+                ) Sửa
+                button(
+                  class="btn btn-danger btn-sm ml-1"
+                  item-id=item.recruitmentId
+                  button-delete
+                  data-path=`${prefixAdmin}/recruitment/delete`
+                ) Xóa
+    nav(class="mt-3")
+      ul.justify-content-center.pagination
+        //- li.page-item
+        //-   button.page-link Trang truoc
+        if(currentPage > 1)
+          li.page-item
+            button.page-link(button-pagination=currentPage-1).text-dark Back
+        -for (var i = 1; i <= totlePage; i++)
+          li.page-item
+            button.page-link.text-dark(button-pagination=i class=`${i == currentPage?"bg-primary":""}`) #{i}
+        if(currentPage < totlePage)
+          li.page-item
+            button.page-link.text-dark(button-pagination=currentPage+1) Next
+          
+      

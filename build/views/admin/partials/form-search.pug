@@ -1,0 +1,14 @@
+form(form-search action="")
+  .input-group 
+    input(
+      type = "text"
+      placeholder = "Tìm kiếm theo tiêu đề"
+      name = "keyword"
+      class = "form-control"
+      value = keyword?keyword:""
+    )
+    .input-group-append 
+      button(
+        class = "btn btn-success"
+        type = "submit"
+      ) Tim

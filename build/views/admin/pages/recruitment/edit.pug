@@ -1,0 +1,105 @@
+extends ../../layouts/default.pug
+include ../../mixins/box-filter.pug
+include ../../mixins/box-head.pug
+block main 
+  .row
+      .col-12
+        +box-head(pageTitle)
+  form(
+    action=`${prefixAdmin}/recruitment/edit/${recruitmentId}?_method=PATCH`
+    method="POST"
+  )
+    div(class="form-group")
+      label(for="title") Tiêu đề
+      input(
+        type="text"
+        class="form-control"
+        id="title"
+        name="title"
+        value=recruitment.title
+        required
+      )
+    div(class="form-group")
+      label(for="parent_id") Lĩnh vực
+      select(
+        class="form-control"
+        id="category_id"
+        name="category_id"
+      )
+        each item in careers
+          option(value=item.categoryId selected=(categoryId == item.categoryId ? true : null)) #{item.name}
+    div(class="form-group")
+      label(for="position") Vị trí công việc
+      input(
+        type="text"
+        class="form-control"
+        id="position"
+        name="position"
+        value=recruitment.workPosition
+        placeholder="Nhập vị trí công việc"
+      )
+    div(class="form-group")
+      label(for="location") Địa điểm công việc
+      input(
+        type="text"
+        class="form-control"
+        id="location"
+        name="location"
+        value=recruitment.location
+      )
+    div(class="form-group")
+      label(for="description") Mô tả
+      textarea(
+        class="form-control"
+        id="description"
+        name="description"
+        rows="5"
+        textarea-mce
+      ) #{recruitment.description}
+    div(class="form-group")
+      label(for="experience") Kinh nghiệm
+      input(
+        type="text"
+        class="form-control"
+        id="experience"
+        name="experience" 
+        value=recruitment.experience  
+        placeholder="Nhập số năm kinh nghiệm cần"
+      )
+    div(class="form-group")
+      label(for="salary") Lương ($)
+      input(
+        type="number"
+        class="form-control"
+        id="salary"
+        name="salary"
+        min="0"
+        required
+        value=recruitment.salary
+      )
+    div(class="form-group")
+      label(for="numbers") Số lượng
+      input(
+        type="number"
+        class="form-control"
+        id="numbers"
+        name="numbers"
+        min="0"
+        required
+        value=recruitment.theNumberOfOpenings
+      )
+    div(class="form-group")
+      label(for="deadline") Hết hạn
+      input(
+        type="date"
+        class="form-control"
+        id="deadline"
+        name="deadline"
+        required
+        value=recruitment.deadline
+      )
+    div(class="form-group")
+      button(
+        type="submit"
+        class="btn btn-primary"
+      ) Cap nhat

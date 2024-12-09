@@ -1,0 +1,120 @@
+extends ../../layouts/default.pug
+include ../../mixins/box-filter.pug
+include ../../mixins/box-head.pug
+block main 
+  .row
+      .col-12
+        +box-head(pageTitle)
+  form(
+    action=`${prefixAdmin}/recruitment/create`
+    method="POST"
+  )
+    div(class="form-group")
+      label(for="title") Tiêu đề
+      input(
+        type="text"
+        class="form-control"
+        id="title"
+        name="title"
+        required
+        placeholder="Nhập tiêu đề"
+      )
+    div(class="form-group")
+      label(for="category_id") Lĩnh vực
+      select(
+        class="form-control"
+        id="category_id"
+        name="category_id"
+
+      )
+        each item in careers
+          option(value=item.categoryId) #{item.name}
+    div(class="form-group")
+      label(for="employer_id") Nhà tuyển dụng
+      input(
+        list="browsers"
+        name="employer_id"
+        id="employer_id"
+        class="w-100"
+        required
+      )
+      dataList(
+        id="browsers"
+        name="employer_id"
+      )
+        each item in employers
+          option(value=item.employerId) #{item.companyName} 
+            b (được tạo bởi #{item.fullName})
+    div(class="form-group")
+      label(for="position") Vị trí công việc
+      input(
+        type="text"
+        class="form-control"
+        id="position"
+        name="position"
+        placeholder="Nhập vị trí công việc"
+      )
+    div(class="form-group")
+      label(for="location") Địa điểm công việc
+      input(
+        type="text"
+        class="form-control"
+        id="location"
+        name="location"
+        placeholder="Nhập địa điểm công việc"
+      )
+    div(class="form-group")
+      label(for="description") Mô tả
+      textarea(
+        class="form-control"
+        id="description"
+        name="description"
+        rows="5"
+        placeholder="Nhập mô tả"
+        textarea-mce
+      )
+    div(class="form-group")
+      label(for="experience") Kinh nghiệm (năm)
+      input(
+        type="text"
+        class="form-control"
+        id="experience"
+        name="experience"  
+        placeholder="Nhập yêu cầu kinh nghiệm" 
+      )
+    div(class="form-group")
+      label(for="salary") Lương ($)
+      input(
+        type="number"
+        class="form-control"
+        id="salary"
+        name="salary"
+        min="0"
+        placeholder="Nhập mức lương ($)"
+        required
+      )
+    div(class="form-group")
+      label(for="numbers") Số lượng
+      input(
+        type="number"
+        class="form-control"
+        id="numbers"
+        name="numbers"
+        min="0"
+        placeholder="Nhập số lượng cần tuyển"
+        required
+      )
+    div(class="form-group")
+      label(for="deadline") Hết hạn
+      input(
+        type="date"
+        class="form-control"
+        id="deadline"
+        name="deadline"
+        required
+      )
+    div(class="form-group")
+      button(
+        type="submit"
+        class="btn btn-primary"
+      ) Cap nhat
