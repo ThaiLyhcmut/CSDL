@@ -42,10 +42,10 @@ block main
             th location
             th description
             th experience
-            th salary
-            th numbers
-            th deadline
-            th createAt
+            th(item-value="salary") salary
+            th(item-value="theNumberOfOpenings") numbers
+            th(item-value="deadline") deadline
+            th(item-value="createAt") createAt
             th active
         tbody
           each item, index in recruitments

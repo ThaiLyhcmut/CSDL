@@ -1,11 +1,13 @@
 import { Request, Response } from "express"
 import sequelize from "../../configs/database"
-import { QueryTypes } from "sequelize"
+import { Order, QueryTypes } from "sequelize"
 import { Recruitment } from "../../models/recruitment.model"
 import { User } from "../../models/user.model"
 import { Category } from "../../models/category.model"
 export const getRecruitmentId = async (req: Request, res: Response) => {
   try{
+    let sort_param = req.query.sort as string | undefined || ""
+    let value_param = req.query.order as string | undefined || ""
     let limit_param = parseInt(req.query.limit as string) || 4
     let page = parseInt(req.query.page as string) || 1
     const categoryId = req.params.id || ""
@@ -22,17 +24,23 @@ export const getRecruitmentId = async (req: Request, res: Response) => {
       const condition = keyword
         ? sequelize.literal(`title REGEXP :keyword OR description REGEXP :keyword`)
         : sequelize.literal('1 = 1');
+      const orderCondition:Order = sort_param && value_param
+        ? [[sort_param, value_param === "ASC" ? "ASC" : "DESC"]]
+        : undefined;
+      console.log(orderCondition)
       recruitments = await Recruitment.findAll({
         where: condition,
         replacements: keyword ? { keyword } : undefined,
         limit: limit_param,
         offset: offset_param,
+        order: orderCondition,
         raw: true,
       })
+      console.log(recruitments)
     }
     else{
-      recruitments = await sequelize.query(`CALL GetCategoryRecumentById(:categoryId, :keyword, :limit_param, :offset_param)`,{
-        replacements: { categoryId, keyword, limit_param, offset_param },
+      recruitments = await sequelize.query(`CALL GetCategoryRecumentById(:categoryId, :keyword, :limit_param, :offset_param, :sort_param, :value_param)`,{
+        replacements: { categoryId, keyword, limit_param, offset_param, sort_param, value_param },
         type: QueryTypes.RAW
       })
       categoryName = careers.find(item => item.categoryId == categoryId).name
@@ -61,6 +69,7 @@ export const getRecruitmentId = async (req: Request, res: Response) => {
       currentPage: page
     })
   }catch (err) {
+    console.log(err)
     res.render("admin/pages/error/404", {
       code: 400,
       code_param: 0,

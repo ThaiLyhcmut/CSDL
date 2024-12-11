@@ -68,5 +68,21 @@ if(listButtonPagination.length > 0){
   })
 }
 
-
+const ListButton = document.querySelectorAll(".button-sort-value  tr th[item-value]")
+console.log(ListButton)
+if(ListButton.length > 0){
+  let url = new URL(location.href);
+  ListButton.forEach(button => {
+    button.addEventListener("click", () => {
+      const key = button.getAttribute("item-value")
+      if("ASC" != url.searchParams.get("order") || key != url.searchParams.get("sort")){
+        url.searchParams.set("order", "ASC")
+      }else{
+        url.searchParams.set("order", "DESC")
+      }
+      url.searchParams.set("sort", key)
+      location.href = url.href
+    })
+  })
+}
 // Thiết lập giá trị mặc định cho input
