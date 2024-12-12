@@ -22,7 +22,7 @@ const index = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         });
         console.log(careers);
         res.render("admin/pages/category/index", {
-            pageTitile: "Danh sách phân loại việc làm",
+            pageTitle: "Danh sách phân loại việc làm",
             careers: careers
         });
     }

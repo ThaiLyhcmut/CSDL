@@ -3,11 +3,10 @@ include ../../mixins/box-head.pug
 include ../../mixins/box-filter.pug
 
 block main
-  .row
-    .col-12
-      +box-head(pageTitle)
-  .container.my-3
-    
+  .container.my-1
+    .row
+      .col-12
+        +box-head(pageTitle)
     .card
       .card-header Chọn lĩnh vực
       .card-body

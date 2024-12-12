@@ -12,7 +12,7 @@ export const index = async (req: Request, res: Response) => {
 
     console.log(careers)
     res.render("admin/pages/category/index", {
-      pageTitile: "Danh sách phân loại việc làm",
+      pageTitle: "Danh sách phân loại việc làm",
       careers: careers
     })
   }catch (err) {
