@@ -26,14 +26,19 @@ const getRecruitmentId = (req, res) => __awaiter(void 0, void 0, void 0, functio
         let page = parseInt(req.query.page) || 1;
         const categoryId = req.params.id || "";
         const keyword = req.query.keyword || "";
-        const offset_param = (page - 1) * limit_param;
-        console.log(offset_param);
+        let offset_param = (page - 1) * limit_param;
         let recruitments;
         const careers = yield database_1.default.query(`CALL GetCareerRecruitmentCounts()`, {
             type: sequelize_1.QueryTypes.RAW,
         });
         let categoryName = "tất cả";
         let totlePage = -1;
+        if (req.query.keyword) {
+            totlePage = 1,
+                limit_param = 50,
+                offset_param = 0;
+            page = 1;
+        }
         if (!categoryId) {
             const condition = keyword
                 ? database_1.default.literal(`title REGEXP :keyword OR description REGEXP :keyword`)

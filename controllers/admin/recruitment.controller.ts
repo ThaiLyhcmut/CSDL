@@ -13,14 +13,19 @@ export const getRecruitmentId = async (req: Request, res: Response) => {
     let page = parseInt(req.query.page as string) || 1
     const categoryId = req.params.id || ""
     const keyword = req.query.keyword || "";
-    const offset_param = (page - 1)*limit_param
-    console.log(offset_param)
+    let offset_param = (page - 1)*limit_param
     let recruitments
     const careers:any = await sequelize.query(`CALL GetCareerRecruitmentCounts()`, {
       type: QueryTypes.RAW,
     })
     let categoryName = "tất cả"
     let totlePage:any = -1
+    if(req.query.keyword){
+      totlePage = 1,
+      limit_param = 50,
+      offset_param = 0
+      page = 1
+    }
     if (!categoryId){
       const condition = keyword
         ? sequelize.literal(`title REGEXP :keyword OR description REGEXP :keyword`)
