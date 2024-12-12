@@ -19,6 +19,8 @@ const recruitment_model_1 = require("../../models/recruitment.model");
 const category_model_1 = require("../../models/category.model");
 const getRecruitmentId = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
+        let sort_param = req.query.sort || "";
+        let value_param = req.query.order || "";
         let limit_param = parseInt(req.query.limit) || 4;
         let page = parseInt(req.query.page) || 1;
         const categoryId = req.params.id || "";
@@ -35,17 +37,23 @@ const getRecruitmentId = (req, res) => __awaiter(void 0, void 0, void 0, functio
             const condition = keyword
                 ? database_1.default.literal(`title REGEXP :keyword OR description REGEXP :keyword`)
                 : database_1.default.literal('1 = 1');
+            const orderCondition = sort_param && value_param
+                ? [[sort_param, value_param === "ASC" ? "ASC" : "DESC"]]
+                : undefined;
+            console.log(orderCondition);
             recruitments = yield recruitment_model_1.Recruitment.findAll({
                 where: condition,
                 replacements: keyword ? { keyword } : undefined,
                 limit: limit_param,
                 offset: offset_param,
+                order: orderCondition,
                 raw: true,
             });
+            console.log(recruitments);
         }
         else {
-            recruitments = yield database_1.default.query(`CALL GetCategoryRecumentById(:categoryId, :keyword, :limit_param, :offset_param)`, {
-                replacements: { categoryId, keyword, limit_param, offset_param },
+            recruitments = yield database_1.default.query(`CALL GetCategoryRecumentById(:categoryId, :keyword, :limit_param, :offset_param, :sort_param, :value_param)`, {
+                replacements: { categoryId, keyword, limit_param, offset_param, sort_param, value_param },
                 type: sequelize_1.QueryTypes.RAW
             });
             categoryName = careers.find(item => item.categoryId == categoryId).name;
@@ -71,10 +79,13 @@ const getRecruitmentId = (req, res) => __awaiter(void 0, void 0, void 0, functio
             keyword: keyword,
             totle: totle,
             totlePage: totlePage,
-            currentPage: page
+            currentPage: page,
+            sort: sort_param,
+            value: value_param
         });
     }
     catch (err) {
+        console.log(err);
         res.render("admin/pages/error/404", {
             code: 400,
             code_param: 0,

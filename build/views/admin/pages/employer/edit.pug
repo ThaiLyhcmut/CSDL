@@ -1,0 +1,58 @@
+extends ../../layouts/default.pug
+include ../../mixins/box-filter.pug
+include ../../mixins/box-head.pug
+block main 
+  .row
+      .col-12
+        +box-head(pageTitle)
+  form(
+    action=`${prefixAdmin}/employer/edit/${User.userId}?_method=PATCH`
+    method="POST"
+  )
+    div(class="form-group")
+      label(for="fullName") Tên
+      input(
+        type="text"
+        class="form-control"
+        id="fullName"
+        name="fullName"
+        placeholder="Nhập tên nhà tuyển dụng"
+        value=User.fullName
+        required
+      )
+    div(class="form-group")
+      label(for="birthday") birthday
+      input(
+        type="date"
+        class="form-control"
+        id="birthday"
+        name="birthday"
+        value=User.birthday
+        required
+      )
+    div(class="form-group")
+      label(for="gender") gender
+      select(
+        class="form-control"
+        id="gender"
+        name="gender"
+      )
+        option(value="Male" selected=(User.gender == "Male"?true:null)) Male 
+        option(value="Famale" selected=(User.gender == "Famale"?true:null)) Famale 
+        option(value="Order" selected=(User.gender == "Order"?true:null)) Order 
+    div(class="form-group")
+      label(for="address") địa chỉ
+      input(
+        type="text"
+        class="form-control"
+        id="address"
+        name="address"  
+        placeholder="Nhập địa chỉ" 
+        value=User.address
+        required
+      )
+    div(class="form-group")
+      button(
+        type="submit"
+        class="btn btn-primary"
+      ) Cap nhat

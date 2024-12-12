@@ -7,8 +7,9 @@ exports.User = void 0;
 const sequelize_1 = require("sequelize");
 const database_1 = __importDefault(require("../configs/database"));
 exports.User = database_1.default.define("User", {
-    UserId: {
+    userId: {
         type: sequelize_1.DataTypes.INTEGER,
+        autoIncrement: true,
         allowNull: false,
         primaryKey: true,
     },
@@ -17,7 +18,8 @@ exports.User = database_1.default.define("User", {
         allowNull: false
     },
     createDate: {
-        type: sequelize_1.DataTypes.DATE
+        type: sequelize_1.DataTypes.DATE,
+        defaultValue: sequelize_1.DataTypes.NOW
     },
     fullName: {
         type: sequelize_1.DataTypes.STRING(100)

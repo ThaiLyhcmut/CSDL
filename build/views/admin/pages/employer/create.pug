@@ -1,0 +1,91 @@
+extends ../../layouts/default.pug
+include ../../mixins/box-filter.pug
+include ../../mixins/box-head.pug
+block main 
+  .row
+      .col-12
+        +box-head(pageTitle)
+  form(
+    action=`${prefixAdmin}/employer/create`
+    method="POST"
+  )
+    div(class="form-group")
+      label(for="email") email
+      input(
+        type="email"
+        class="form-control"
+        id="email"
+        name="email"
+        required
+        placeholder="Nhập email"
+      )
+    div(class="form-group")
+      label(for="companyId") Công ty
+      input(
+        list="browsers"
+        name="companyId"
+        id="companyId"
+        class="w-100"
+        required
+      )
+      dataList(
+        id="browsers"
+        name="companyId"
+      )
+        each item in company
+          option(value=item.taxId) #{item.companyName} 
+            b (#{item.location})
+    div(class="form-group")
+      label(for="fullName") Tên
+      input(
+        type="text"
+        class="form-control"
+        id="fullName"
+        name="fullName"
+        placeholder="Nhập tên nhà tuyển dụng"
+        required
+      )
+    div(class="form-group")
+      label(for="birthday") birthday
+      input(
+        type="date"
+        class="form-control"
+        id="birthday"
+        name="birthday"
+        required
+      )
+    div(class="form-group")
+      label(for="gender") gender
+      select(
+        class="form-control"
+        id="gender"
+        name="gender"
+      )
+        option(value="Male") Male 
+        option(value="Famale") Famale 
+        option(value="Order") Order 
+    div(class="form-group")
+      label(for="phone") Số điện thoại
+      input(
+        type="text"
+        class="form-control"
+        id="phone"
+        name="phone"
+        placeholder="Nhập số điện thoại"
+        required
+      )
+    div(class="form-group")
+      label(for="address") địa chỉ
+      input(
+        type="text"
+        class="form-control"
+        id="address"
+        name="address"  
+        placeholder="Nhập địa chỉ" 
+        required
+      )
+    div(class="form-group")
+      button(
+        type="submit"
+        class="btn btn-primary"
+      ) Cap nhat
