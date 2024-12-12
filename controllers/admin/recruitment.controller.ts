@@ -4,6 +4,7 @@ import { Order, QueryTypes } from "sequelize"
 import { Recruitment } from "../../models/recruitment.model"
 import { User } from "../../models/user.model"
 import { Category } from "../../models/category.model"
+import moment from "moment"
 export const getRecruitmentId = async (req: Request, res: Response) => {
   try{
     let sort_param = req.query.sort as string | undefined || ""
@@ -36,7 +37,6 @@ export const getRecruitmentId = async (req: Request, res: Response) => {
         order: orderCondition,
         raw: true,
       })
-      console.log(recruitments)
     }
     else{
       recruitments = await sequelize.query(`CALL GetCategoryRecumentById(:categoryId, :keyword, :limit_param, :offset_param, :sort_param, :value_param)`,{
@@ -57,7 +57,10 @@ export const getRecruitmentId = async (req: Request, res: Response) => {
       totlePage = ((totle + (limit_param - 1))/limit_param)
     }
     totlePage = parseInt(totlePage)
-    console.log(totlePage)
+    for (const item of recruitments){
+      item["deadline"] = moment(item.deadline).format("DD/MM/YY")
+      item["createAt"] = moment(item.createAt).format("HH:mm DD/MM/YY")
+    }
     res.render("admin/pages/recruitment/index", {
       pageTitle: `Trang danh sách bài đăng ${categoryName}`,
       recruitments: recruitments,

@@ -17,6 +17,7 @@ const database_1 = __importDefault(require("../../configs/database"));
 const sequelize_1 = require("sequelize");
 const recruitment_model_1 = require("../../models/recruitment.model");
 const category_model_1 = require("../../models/category.model");
+const moment_1 = __importDefault(require("moment"));
 const getRecruitmentId = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         let sort_param = req.query.sort || "";
@@ -49,7 +50,6 @@ const getRecruitmentId = (req, res) => __awaiter(void 0, void 0, void 0, functio
                 order: orderCondition,
                 raw: true,
             });
-            console.log(recruitments);
         }
         else {
             recruitments = yield database_1.default.query(`CALL GetCategoryRecumentById(:categoryId, :keyword, :limit_param, :offset_param, :sort_param, :value_param)`, {
@@ -70,7 +70,10 @@ const getRecruitmentId = (req, res) => __awaiter(void 0, void 0, void 0, functio
             totlePage = ((totle + (limit_param - 1)) / limit_param);
         }
         totlePage = parseInt(totlePage);
-        console.log(totlePage);
+        for (const item of recruitments) {
+            item["deadline"] = (0, moment_1.default)(item.deadline).format("DD/MM/YY");
+            item["createAt"] = (0, moment_1.default)(item.createAt).format("HH:mm DD/MM/YY");
+        }
         res.render("admin/pages/recruitment/index", {
             pageTitle: `Trang danh sách bài đăng ${categoryName}`,
             recruitments: recruitments,
