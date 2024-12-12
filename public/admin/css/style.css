@@ -55,3 +55,8 @@
   margin: 0 auto; /* Căn giữa alert trong container */
   padding: 10px 20px; /* Thêm padding để alert dễ nhìn hơn */
 }
+
+.button-sort-value tr th[item-value] i{
+  margin-left: 3px;
+  display: inline;
+}

@@ -66,7 +66,9 @@ export const getRecruitmentId = async (req: Request, res: Response) => {
       keyword: keyword,
       totle: totle,
       totlePage: totlePage,
-      currentPage: page
+      currentPage: page,
+      sort: sort_param,
+      value: value_param
     })
   }catch (err) {
     console.log(err)

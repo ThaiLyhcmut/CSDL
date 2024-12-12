@@ -43,9 +43,25 @@ block main
             th description
             th experience
             th(item-value="salary") salary
+              if sort == "salary" && value == "ASC"
+                i.fa-solid.fa-sort-up
+              if sort == "salary" && value == "DESC" && !categoryId
+                i.fa-solid.fa-sort-down
             th(item-value="theNumberOfOpenings") numbers
+              if sort == "theNumberOfOpenings" && value == "ASC"
+                i.fa-solid.fa-sort-up
+              if sort == "theNumberOfOpenings" && value == "DESC" && !categoryId
+                i.fa-solid.fa-sort-down
             th(item-value="deadline") deadline
+              if sort == "deadline" && value == "ASC"
+                i.fa-solid.fa-sort-up
+              if sort == "deadline" && value == "DESC" && !categoryId
+                i.fa-solid.fa-sort-down
             th(item-value="createAt") createAt
+              if sort == "createAt" && value == "ASC"
+                i.fa-solid.fa-sort-up
+              if sort == "createAt" && value == "DESC" && !categoryId
+                i.fa-solid.fa-sort-down
             th active
         tbody
           each item, index in recruitments
