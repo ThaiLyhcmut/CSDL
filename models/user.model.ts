@@ -6,8 +6,9 @@ import sequelize from "../configs/database";
 export const User = sequelize.define(
   "User",
   {
-    UserId: {
+    userId: {
       type: DataTypes.INTEGER,
+      autoIncrement: true,
       allowNull: false,
       primaryKey: true,
     },
@@ -16,7 +17,8 @@ export const User = sequelize.define(
       allowNull: false
     },
     createDate: {
-      type: DataTypes.DATE
+      type: DataTypes.DATE,
+      defaultValue: DataTypes.NOW
     },
     fullName: {
       type: DataTypes.STRING(100)

@@ -43,7 +43,7 @@ block main
         name="employer_id"
       )
         each item in employers
-          option(value=item.employerId) #{item.companyName} 
+          option(value=item.employerId class="w-100") #{item.companyName} 
             b (được tạo bởi #{item.fullName})
     div(class="form-group")
       label(for="position") Vị trí công việc
