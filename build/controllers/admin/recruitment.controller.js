@@ -18,6 +18,7 @@ const sequelize_1 = require("sequelize");
 const recruitment_model_1 = require("../../models/recruitment.model");
 const category_model_1 = require("../../models/category.model");
 const moment_1 = __importDefault(require("moment"));
+const employer_model_1 = require("../../models/employer.model");
 const getRecruitmentId = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         let sort_param = req.query.sort || "";
@@ -41,15 +42,18 @@ const getRecruitmentId = (req, res) => __awaiter(void 0, void 0, void 0, functio
         }
         if (!categoryId) {
             const condition = keyword
-                ? database_1.default.literal(`title REGEXP :keyword OR description REGEXP :keyword`)
-                : database_1.default.literal('1 = 1');
+                ? {
+                    [sequelize_1.Op.or]: [
+                        { title: { [sequelize_1.Op.regexp]: keyword } },
+                        { workPosition: { [sequelize_1.Op.regexp]: keyword } },
+                    ],
+                }
+                : {};
             const orderCondition = sort_param && value_param
                 ? [[sort_param, value_param === "ASC" ? "ASC" : "DESC"]]
                 : undefined;
-            console.log(orderCondition);
             recruitments = yield recruitment_model_1.Recruitment.findAll({
                 where: condition,
-                replacements: keyword ? { keyword } : undefined,
                 limit: limit_param,
                 offset: offset_param,
                 order: orderCondition,
@@ -197,7 +201,12 @@ const getRecruitmentCreate = (req, res) => __awaiter(void 0, void 0, void 0, fun
 exports.getRecruitmentCreate = getRecruitmentCreate;
 const postRecruitmentCreate = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        if (!req.body.employer_id) {
+        const exitsEmployer = yield employer_model_1.Employer.findOne({
+            where: {
+                employerId: req.body.employer_id
+            }
+        });
+        if (!req.body.employer_id || !exitsEmployer) {
             res.redirect("back");
         }
         const data = {

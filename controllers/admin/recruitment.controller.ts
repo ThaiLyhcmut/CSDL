@@ -1,10 +1,11 @@
 import { Request, Response } from "express"
 import sequelize from "../../configs/database"
-import { Order, QueryTypes } from "sequelize"
+import { Op, Order, QueryTypes } from "sequelize"
 import { Recruitment } from "../../models/recruitment.model"
 import { User } from "../../models/user.model"
 import { Category } from "../../models/category.model"
 import moment from "moment"
+import { Employer } from "../../models/employer.model"
 export const getRecruitmentId = async (req: Request, res: Response) => {
   try{
     let sort_param = req.query.sort as string | undefined || ""
@@ -28,15 +29,19 @@ export const getRecruitmentId = async (req: Request, res: Response) => {
     }
     if (!categoryId){
       const condition = keyword
-        ? sequelize.literal(`title REGEXP :keyword OR description REGEXP :keyword`)
-        : sequelize.literal('1 = 1');
+        ? {
+            [Op.or]: [
+              { title: { [Op.regexp]: keyword } },
+              { workPosition: { [Op.regexp]: keyword } },
+            ],
+          }
+        : {};
       const orderCondition:Order = sort_param && value_param
         ? [[sort_param, value_param === "ASC" ? "ASC" : "DESC"]]
         : undefined;
-      console.log(orderCondition)
       recruitments = await Recruitment.findAll({
         where: condition,
-        replacements: keyword ? { keyword } : undefined,
+        // replacements: keyword ? { keyword } : undefined,
         limit: limit_param,
         offset: offset_param,
         order: orderCondition,
@@ -181,7 +186,12 @@ export const getRecruitmentCreate = async(req: Request, res: Response) => {
 
 export const postRecruitmentCreate = async (req: Request, res: Response) => {
   try{
-    if(!req.body.employer_id){
+    const exitsEmployer = await Employer.findOne({
+      where: {
+        employerId: req.body.employer_id
+      }
+    })
+    if(!req.body.employer_id || !exitsEmployer){
       res.redirect("back")
     }
     const data = {
